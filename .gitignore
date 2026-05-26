@@ -29,6 +29,8 @@ coverage.xml
 htmlcov/
 
 # ── 부하 테스트 결과 ──────────────────────────────────────────────
+*locust*.html
+*locust*.csv
 locust_report*
 loadtest/
 
