@@ -1,0 +1,43 @@
+groups:
+  - name: api
+    rules:
+      - alert: HighErrorRate
+        expr: >
+          sum(rate(django_http_responses_total_by_status_total{status=~"5.."}[5m]))
+          / sum(rate(django_http_responses_total_by_status_total[5m])) > 0.01
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "5xx rate > 1% (current {{ $value | humanizePercentage }})"
+
+      - alert: SlowP95
+        expr: >
+          histogram_quantile(0.95,
+            sum(rate(django_http_requests_latency_seconds_bucket[5m])) by (le)
+          ) > 0.5
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "P95 latency > 500ms"
+
+  - name: booking
+    rules:
+      - alert: BookingFailureSurge
+        expr: rate(booking_attempts_total{result!="success"}[5m]) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Booking failures > 1/s for 5m"
+
+  - name: face
+    rules:
+      - alert: AntispoofOutage
+        expr: increase(antispoof_outage_total[5m]) > 3
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Antispoof service failing repeatedly"

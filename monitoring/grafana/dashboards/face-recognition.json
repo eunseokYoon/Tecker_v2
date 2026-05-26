@@ -1,0 +1,59 @@
+{
+  "uid": "tecker-face",
+  "title": "Face Recognition",
+  "tags": ["tecker"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "id": 1,
+      "title": "AWS Rekognition Calls by Operation",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "rate(aws_rekognition_calls_total[5m])",
+          "legendFormat": "{{op}}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Face Register Failures by Reason",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "rate(face_register_failures_total[5m])",
+          "legendFormat": "register: {{reason}}"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Face Auth Failures by Reason",
+      "type": "timeseries",
+      "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "rate(face_auth_failures_total[5m])",
+          "legendFormat": "auth: {{reason}}"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Antispoof Outages",
+      "type": "timeseries",
+      "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+      "targets": [
+        {
+          "expr": "increase(antispoof_outage_total[5m])",
+          "legendFormat": "outages (5m window)"
+        }
+      ]
+    }
+  ]
+}

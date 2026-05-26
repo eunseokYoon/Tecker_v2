@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>티켓 체크인</title>
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f4f5f7; margin: 0; padding: 24px; }
+    .card { max-width: 420px; margin: 40px auto; background: #fff; border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,.08); overflow: hidden; }
+    .header { background: #2d6cdf; color: #fff; padding: 20px 24px; }
+    .header h1 { margin: 0; font-size: 20px; }
+    .body { padding: 24px; }
+    .row { display: flex; justify-content: space-between; padding: 10px 0;
+           border-bottom: 1px solid #eee; }
+    .row:last-child { border-bottom: none; }
+    .label { color: #888; }
+    .value { font-weight: 600; }
+    .status { display: inline-block; padding: 4px 12px; border-radius: 999px;
+              font-size: 13px; font-weight: 600; }
+    .status.checked_in { background: #e6f4ea; color: #1e7e34; }
+    .status.verified { background: #e8f0fe; color: #2d6cdf; }
+    .status.other { background: #f1f1f1; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <h1>{{ ticket.seat.zone.event_time.event.name }}</h1>
+    </div>
+    <div class="body">
+      <div class="row">
+        <span class="label">예매번호</span>
+        <span class="value">T{{ ticket.id }}</span>
+      </div>
+      <div class="row">
+        <span class="label">출연</span>
+        <span class="value">{{ ticket.seat.zone.event_time.event.artist }}</span>
+      </div>
+      <div class="row">
+        <span class="label">일시</span>
+        <span class="value">{{ ticket.seat.zone.event_time.event_date }}</span>
+      </div>
+      <div class="row">
+        <span class="label">장소</span>
+        <span class="value">{{ ticket.seat.zone.event_time.event.location }}</span>
+      </div>
+      <div class="row">
+        <span class="label">좌석</span>
+        <span class="value">{{ ticket.seat.zone.name }} {{ ticket.seat.seat_number }}</span>
+      </div>
+      <div class="row">
+        <span class="label">상태</span>
+        <span class="value">
+          {% if ticket.ticket_status == "checked_in" %}
+            <span class="status checked_in">입장 완료</span>
+          {% elif ticket.ticket_status == "verified" %}
+            <span class="status verified">얼굴 등록 완료</span>
+          {% else %}
+            <span class="status other">{{ ticket.get_ticket_status_display }}</span>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
