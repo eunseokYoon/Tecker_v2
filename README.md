@@ -1,6 +1,7 @@
 <h2 align="center">2025 Summer Bootcamp Team G</h2>
 <h3 align="center">
-  🎟️ 티켓 리셀 방지 서비스
+  🎟️ 티켓 리셀 방지 서비스 (backend version_2)
+  프로젝트 주소 : https://github.com/2025-summerbootcamp-TeamG
 </h3>
 </br>
 <p align="center">
